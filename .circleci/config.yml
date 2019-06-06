@@ -1,0 +1,29 @@
+version: 1
+jobs:
+  build:
+    working_directory: ~/Newsnips
+    docker:
+      - image: circleci/android:api-28
+    environment:
+      GRADLE_OPTS: -Xmx4g -Dorg.gradle.daemon=false
+      JVM_OPTS: -Xmx4g
+    steps:
+      - checkout
+      - restore_cache:
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "gradle/wrapper/gradle-wrapper.properties" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "gradle/wrapper/gradle-wrapper.properties" }}
+      - run:
+          name: Run Ktlint
+          command: ./gradlew ktlint
+      - run:
+          name: Run Lint
+          command: ./gradlew lintDebug
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew testDebugUnitTest
