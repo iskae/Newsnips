@@ -1,0 +1,8 @@
+apply plugin: "${BuildPlugins.kotlin}"
+
+dependencies {
+    implementation KotlinDependencies.stdLib
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
