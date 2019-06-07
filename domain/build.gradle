@@ -1,0 +1,15 @@
+apply plugin: "${BuildPlugins.kotlin}"
+
+dependencies {
+  implementation project(ProjectModules.core)
+  implementation KotlinDependencies.stdLib
+  implementation CommonDependencies.javaxInject
+  implementation RxJavaDependencies.rxJava
+
+  testImplementation TestingDependencies.assertJ
+  testImplementation TestingDependencies.junit
+  testImplementation TestingDependencies.mockitoKt
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
