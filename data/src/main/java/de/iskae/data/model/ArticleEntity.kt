@@ -1,7 +1,7 @@
-package de.iskae.domain.model
+package de.iskae.data.model
 
-data class Article(
-    val country: String?,
+data class ArticleEntity(
+    val countryCode: String?,
     val category: String?,
     val source: String,
     val author: String,

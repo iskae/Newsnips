@@ -1,0 +1,48 @@
+apply plugin: "${BuildPlugins.androidLibrary}"
+apply plugin: "${BuildPlugins.kotlinKapt}"
+apply plugin: "${BuildPlugins.kotlinAndroid}"
+
+android {
+  compileSdkVersion AndroidSdk.compile
+  buildToolsVersion AndroidSdk.buildTools
+  defaultConfig {
+    minSdkVersion AndroidSdk.min
+    targetSdkVersion AndroidSdk.target
+  }
+}
+
+dependencies {
+  implementation project(ProjectModules.core)
+  implementation project(ProjectModules.domain)
+  implementation KotlinDependencies.stdLib
+  implementation CommonDependencies.javaxInject
+
+  implementation RxJavaDependencies.rxJava
+  implementation RxJavaDependencies.rxKotlin
+
+  implementation NetworkDependencies.okHttp
+  implementation NetworkDependencies.loggingInterceptor
+  implementation NetworkDependencies.moshi
+  implementation NetworkDependencies.retrofitMoshiConverter
+  implementation NetworkDependencies.retrofitRxjavaAdapter
+
+  api AndroidDependencies.roomRuntime
+  implementation AndroidDependencies.roomRxJava
+  kapt AndroidDependencies.roomCompiler
+
+  testImplementation TestingDependencies.assertJ
+  testImplementation TestingDependencies.junit
+  testImplementation TestingDependencies.mockitoKt
+  testImplementation TestingDependencies.mockitoInline
+  testImplementation TestingDependencies.robolectric
+  testImplementation TestingDependencies.archTesting
+  testImplementation TestingDependencies.roomTesting
+
+  androidTestImplementation TestingDependencies.junit
+  androidTestImplementation TestingDependencies.androidJUnit
+  androidTestImplementation TestingDependencies.runner
+  androidTestImplementation TestingDependencies.rules
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
