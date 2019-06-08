@@ -1,0 +1,4 @@
+package de.iskae.data.core.topheadlines
+
+const val KEY_PREFERENCE_COUNTRY = "KEY_PREFERENCE_COUNTRY"
+const val KEY_PREFERENCE_CATEGORY = "KEY_PREFERENCE_COUNTRY"

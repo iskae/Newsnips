@@ -21,7 +21,7 @@ object Versions {
   const val javaxAnnotation = "1.0"
 
   //Android
-  const val jetpack = "1.1.0-alpha05"
+  const val jetpack = "1.1.0"
   const val recyclerView = "1.0.0"
   const val androidAnnotations = "1.0.0"
   const val materialDesign = "1.1.0-alpha06"
@@ -58,6 +58,7 @@ object Versions {
 object ProjectModules {
   const val core = ":core"
   const val domain = ":domain"
+  const val data = ":data"
 }
 
 object BuildPlugins {

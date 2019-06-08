@@ -6,14 +6,16 @@ import de.iskae.domain.model.Article
 object ArticleFactory {
   fun makeArticle(): Article {
     return Article(
-      randomString(),
-      randomString(),
-      randomString(),
-      randomString(),
-      randomString(),
-      randomString(),
-      randomString(),
-      randomString()
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString(),
+        randomString()
     )
   }
 
