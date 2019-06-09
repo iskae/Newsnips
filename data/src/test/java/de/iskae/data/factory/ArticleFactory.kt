@@ -7,7 +7,7 @@ import de.iskae.data.model.ArticleEntity
 import de.iskae.data.repository.cache.model.CachedArticle
 import de.iskae.data.repository.cache.model.Config
 import de.iskae.data.repository.remote.model.ArticleResponseModel
-import de.iskae.data.repository.remote.model.SourceResponseModel
+import de.iskae.data.repository.remote.model.Source
 import de.iskae.data.repository.remote.model.TopHeadlinesResponseModel
 import de.iskae.domain.model.Article
 
@@ -58,8 +58,8 @@ object ArticleFactory {
     return articles
   }
 
-  fun makeSourceResponseModel(): SourceResponseModel {
-    return SourceResponseModel(randomString(), randomString())
+  fun makeSourceResponseModel(): Source {
+    return Source(randomString(), randomString())
   }
 
   fun makeArticleResponseModel(): ArticleResponseModel {

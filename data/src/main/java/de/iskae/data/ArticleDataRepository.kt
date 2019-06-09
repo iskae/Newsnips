@@ -3,6 +3,7 @@ package de.iskae.data
 import de.iskae.core.constants.Category
 import de.iskae.core.constants.Country
 import de.iskae.data.mapper.ArticleMapper
+import de.iskae.data.model.ArticleEntity
 import de.iskae.data.repository.ArticleCache
 import de.iskae.data.store.ArticleDataStoreFactory
 import de.iskae.domain.model.Article
@@ -32,10 +33,9 @@ class ArticleDataRepository @Inject constructor(private val mapper: ArticleMappe
               .saveTopHeadlines(country, category, topHeadlines)
               .andThen(Observable.just(topHeadlines))
         }
-        .map { articleEntities ->
-          articleEntities.map { articleEntity ->
-            mapper.mapFromEntity(articleEntity)
-          }
+        .map { t: List<ArticleEntity> ->
+          val articles = t.map { mapper.mapFromEntity(it) }
+          articles
         }
   }
 

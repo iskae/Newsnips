@@ -13,24 +13,35 @@ import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ArticleCacheImpl @Inject constructor(private val articleDatabase: ArticleDatabase,
-                                           private val cachedArticleMapper: CachedArticleMapper) : ArticleCache {
+class ArticleCacheImpl @Inject constructor(
+    private val articleDatabase: ArticleDatabase,
+    private val cachedArticleMapper: CachedArticleMapper
+) : ArticleCache {
   override fun clearTopHeadlines(country: Country?, category: Category?): Completable {
     return Completable.defer {
-      articleDatabase.cachedArticleDao().deleteArticles(country?.name, category?.name)
+      when {
+        country != null && category != null -> articleDatabase.cachedArticleDao().deleteArticlesByCountryAndCategory(country.name, category.name)
+        country != null -> articleDatabase.cachedArticleDao().deleteArticlesByCountry(country.name)
+        category != null -> articleDatabase.cachedArticleDao().deleteArticlesByCategory(category.name)
+      }
       Completable.complete()
     }
   }
 
   override fun saveTopHeadlines(articles: List<ArticleEntity>): Completable {
     return Completable.defer {
-      articleDatabase.cachedArticleDao().insertArticles(articles.map { articleEntity -> cachedArticleMapper.mapFromEntity(articleEntity) })
+      articleDatabase.cachedArticleDao()
+          .insertArticles(articles.map { articleEntity -> cachedArticleMapper.mapFromEntity(articleEntity) })
       Completable.complete()
     }
   }
 
   override fun getTopHeadlines(country: Country?, category: Category?): Observable<List<ArticleEntity>> {
-    return articleDatabase.cachedArticleDao().getArticles(country?.name, category?.name)
+    val articleList = when {
+      country != null && category != null -> articleDatabase.cachedArticleDao().getArticlesByCountryAndCategory(country.name, category.name)
+      else -> articleDatabase.cachedArticleDao().getArticlesByCountryOrCategory(country?.name, category?.name)
+    }
+    return articleList
         .toObservable()
         .map { cachedArticles ->
           cachedArticles.map { cachedArticle ->
@@ -40,7 +51,11 @@ class ArticleCacheImpl @Inject constructor(private val articleDatabase: ArticleD
   }
 
   override fun isTopHeadlinesCached(country: Country?, category: Category?): Single<Boolean> {
-    return articleDatabase.cachedArticleDao().getArticles(country?.name, category?.name)
+    val articleList = when {
+      country != null && category != null -> articleDatabase.cachedArticleDao().getArticlesByCountryAndCategory(country.name, category.name)
+      else -> articleDatabase.cachedArticleDao().getArticlesByCountryOrCategory(country?.name, category?.name)
+    }
+    return articleList
         .onErrorReturn { listOf() }
         .firstOrError()
         .map { cachedArticles -> cachedArticles.isNotEmpty() }
@@ -48,7 +63,8 @@ class ArticleCacheImpl @Inject constructor(private val articleDatabase: ArticleD
 
   override fun setLastCacheTime(country: Country?, category: Category?, lastCacheTime: Long): Completable {
     return Completable.defer {
-      articleDatabase.configDao().insertConfig(Config(lastCacheTime = lastCacheTime, countryCode = country?.name, category = category?.name))
+      articleDatabase.configDao()
+          .insertConfig(Config(lastCacheTime = lastCacheTime, countryCode = country?.name, category = category?.name))
       Completable.complete()
     }
   }
@@ -56,11 +72,15 @@ class ArticleCacheImpl @Inject constructor(private val articleDatabase: ArticleD
   override fun isTopHeadlinesCacheExpired(country: Country?, category: Category?): Single<Boolean> {
     val currentTime = System.currentTimeMillis()
     val cacheExpirationTime = TimeUnit.MINUTES.toMillis(15)//New articles show up with a 15 min delay
-    return articleDatabase.configDao().getConfig(country?.name, category?.name)
-        .single(Config(lastCacheTime = 0, countryCode = country?.name, category = category?.name))
-        .map { config ->
-          currentTime - config.lastCacheTime > cacheExpirationTime
-        }
+    val config = when {
+      country != null && category != null -> articleDatabase.configDao().getConfigByCountryAndCategory(country.name, category.name)
+      else -> articleDatabase.configDao().getConfigByCountryOrCategory(country?.name, category?.name)
+    }
+    return config
+        .defaultIfEmpty(Config(id = 0, lastCacheTime = 0, countryCode = country?.name, category = category?.name))
+        .map {
+          currentTime - it.lastCacheTime > cacheExpirationTime
+        }.toSingle()
   }
 
 }

@@ -12,7 +12,7 @@ class ArticleResponseModelMapper @Inject constructor(
     return ArticleEntity(
         topHeadlinesPreferencesManager.getCountryPreference(),
         topHeadlinesPreferencesManager.getCategoryPreference(),
-        model.sourceResponseModel.name,
+        model.source.name,
         model.author,
         model.title,
         model.description,

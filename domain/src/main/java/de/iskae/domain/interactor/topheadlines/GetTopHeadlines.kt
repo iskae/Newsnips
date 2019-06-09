@@ -10,8 +10,8 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class GetTopHeadlines @Inject constructor(
-    private val articleRepository: ArticleRepository,
-    postExecutionThread: PostExecutionThread
+  private val articleRepository: ArticleRepository,
+  postExecutionThread: PostExecutionThread
 ) : ObservableUseCase<List<Article>, GetTopHeadlines.Params?>(postExecutionThread) {
 
   override fun buildUseCaseObservable(params: Params?): Observable<List<Article>> {
@@ -26,16 +26,8 @@ class GetTopHeadlines @Inject constructor(
 
   data class Params constructor(val forceRefresh: Boolean, val country: String?, val category: String?) {
     companion object {
-      fun forCountry(forceRefresh: Boolean, country: Country): Params {
-        return Params(forceRefresh, country.name, null)
-      }
-
-      fun forCategory(forceRefresh: Boolean, category: Category): Params {
-        return Params(forceRefresh, null, category.name)
-      }
-
-      fun forCountryAndCategory(forceRefresh: Boolean, country: Country, category: Category): Params {
-        return Params(forceRefresh, country.name, category.name)
+      fun forCountryAndCategory(forceRefresh: Boolean, country: Country?, category: Category?): Params {
+        return Params(forceRefresh, country?.name, category?.name)
       }
     }
   }

@@ -9,6 +9,10 @@ android {
     minSdkVersion AndroidSdk.min
     targetSdkVersion AndroidSdk.target
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -43,6 +47,3 @@ dependencies {
   androidTestImplementation TestingDependencies.runner
   androidTestImplementation TestingDependencies.rules
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"

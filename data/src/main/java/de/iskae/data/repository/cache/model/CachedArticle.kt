@@ -12,13 +12,13 @@ data class CachedArticle(
     @ColumnInfo(name = ArticleDbConstants.COLUMN_CATEGORY)
     val category: String?,
     val source: String,
-    val author: String,
+    val author: String?,
     val title: String,
-    val description: String,
+    val description: String?,
     @PrimaryKey
     @ColumnInfo(name = ArticleDbConstants.COLUMN_ARTICLE_URL)
     val directUrl: String,
-    val imageUrl: String,
+    val imageUrl: String?,
     val publishedTime: String,
-    val content: String
+    val content: String?
 )

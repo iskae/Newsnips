@@ -1,8 +1,8 @@
 package de.iskae.data.repository.remote.model
 
 data class ArticleResponseModel(
-    val sourceResponseModel: SourceResponseModel,
-    val author: String,
+    val source: Source,
+    val author: String?,
     val title: String,
     val description: String,
     val url: String,

@@ -35,7 +35,7 @@ class CachedArticleDaoTest {
     val articles = makeCachedArticleList(10)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticlesByCountryOrCategory(Country.DE.name, null).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
@@ -46,14 +46,14 @@ class CachedArticleDaoTest {
     val articles = makeCachedArticleList(10)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticlesByCountryAndCategory(Country.DE.name, Category.BUSINESS.name).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
 
-    database.cachedArticleDao().deleteArticles(Country.DE.name, Category.BUSINESS.name)
+    database.cachedArticleDao().deleteArticlesByCountryAndCategory(Country.DE.name, Category.BUSINESS.name)
 
-    val emptyDbTestObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val emptyDbTestObserver = database.cachedArticleDao().getArticlesByCountryAndCategory(Country.DE.name, Category.BUSINESS.name).test()
     emptyDbTestObserver.assertNoErrors()
     emptyDbTestObserver.assertValueCount(1)
     emptyDbTestObserver.assertValue(emptyList())
@@ -64,14 +64,14 @@ class CachedArticleDaoTest {
     val articles = makeCachedArticleList(10)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticlesByCountryAndCategory(Country.DE.name, Category.BUSINESS.name).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
 
     database.cachedArticleDao().deleteAllArticles()
 
-    val emptyDbTestObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val emptyDbTestObserver = database.cachedArticleDao().getArticlesByCountryAndCategory(Country.DE.name, Category.BUSINESS.name).test()
     emptyDbTestObserver.assertNoErrors()
     emptyDbTestObserver.assertValueCount(1)
     emptyDbTestObserver.assertValue(emptyList())

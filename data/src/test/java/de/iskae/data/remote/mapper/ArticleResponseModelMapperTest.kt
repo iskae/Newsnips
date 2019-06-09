@@ -26,7 +26,7 @@ class ArticleResponseModelMapperTest {
     assertThat(responseModel.title).isEqualTo(articleEntity.title)
     assertThat(responseModel.url).isEqualTo(articleEntity.directUrl)
     assertThat(responseModel.urlToImage).isEqualTo(articleEntity.imageUrl)
-    assertThat(responseModel.sourceResponseModel.name).isEqualTo(articleEntity.source)
+    assertThat(responseModel.source.name).isEqualTo(articleEntity.source)
     assertThat(articleEntity.category).isNull()
     assertThat(articleEntity.countryCode).isNull()
   }

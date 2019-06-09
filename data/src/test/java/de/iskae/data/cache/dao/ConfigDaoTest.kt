@@ -36,7 +36,7 @@ class ConfigDaoTest {
     val config = makeConfig()
     database.configDao().insertConfig(config)
 
-    val testObserver = database.configDao().getConfig(Country.DE.name,Category.BUSINESS.name).test()
+    val testObserver = database.configDao().getConfigByCountryOrCategory(Country.DE.name,null).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(config)
