@@ -2,6 +2,6 @@
   <string name="app_name">Newsnips</string>
   <string name="item_article_from_label">From:</string>
   <string name="item_hours_ago">%d hrs ago</string>
-  <string name="browser_not_fount_toast">Browser not found. Please install a web browser on your device!</string>
+  <string name="browser_not_found_toast">Browser not found. Please install a web browser on your device!</string>
   <string name="retry">Retry</string>
 </resources>
