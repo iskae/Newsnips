@@ -10,9 +10,14 @@
     <variable
       name="data"
       type="ArticleView" />
+
+    <variable
+      name="isFullWidth"
+      type="Boolean" />
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/uiItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,6 +25,8 @@
       android:id="@+id/appCompatImageView"
       android:layout_width="0dp"
       android:layout_height="0dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/placeholder"
       app:layout_constraintDimensionRatio="16:9"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -44,20 +51,22 @@
       android:id="@+id/uiPublishTime"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
-      android:layout_marginBottom="8dp"
+      android:text="@{String.format(@string/item_hours_ago,data.publishedHourDifference)}"
       app:layout_constraintBottom_toBottomOf="@+id/uiArticleTitle"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
+      app:layout_constraintTop_toTopOf="@+id/uiArticleTitle"
       tools:text="3 hrs ago" />
 
     <TextView
-      android:id="@+id/uiContent"
+      android:id="@+id/uiContentOrDescription"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
       android:layout_marginTop="8dp"
+      android:layout_marginBottom="16dp"
+      android:text="@{isFullWidth? data.content:data.description}"
+      app:layout_constraintBottom_toTopOf="@+id/uiFromLabel"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/uiArticleTitle"
@@ -68,10 +77,10 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
+      android:layout_marginBottom="8dp"
       android:text="@string/item_article_from_label"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/uiContent" />
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
       android:id="@+id/uiFrom"

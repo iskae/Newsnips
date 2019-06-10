@@ -6,11 +6,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.iskae.presentation.databinding.ItemArticleBinding
 import de.iskae.presentation.model.ArticleView
+import de.iskae.presentation.topheadlines.adapter.ArticleListAdapterConstants.FULL_WIDTH_ITEM_POSITION_COUNT
 import de.iskae.presentation.topheadlines.adapter.ArticleListAdapterConstants.VIEW_TYPE_FULL_WIDTH
 import de.iskae.presentation.topheadlines.adapter.ArticleListAdapterConstants.VIEW_TYPE_REGULAR
 
-class ArticleListAdapter(diffCallback: ArticleDiffCallback, onArticleListAdapterInteraction: OnArticleListAdapterInteraction)
-  : PagedListAdapter<ArticleView, ArticleListAdapter.ArticleViewHolder>(diffCallback) {
+class ArticleListAdapter(
+    diffCallback: ArticleDiffCallback,
+    private val onArticleListAdapterInteraction: OnArticleListAdapterInteraction
+) : PagedListAdapter<ArticleView, ArticleListAdapter.ArticleViewHolder>(diffCallback) {
 
   override fun onCreateViewHolder(parent: ViewGroup, position: Int): ArticleViewHolder {
     val inflater = LayoutInflater.from(parent.context)
@@ -23,7 +26,7 @@ class ArticleListAdapter(diffCallback: ArticleDiffCallback, onArticleListAdapter
   }
 
   override fun getItemViewType(position: Int): Int {
-    return if (position % 7 == 0) {
+    return if (position % FULL_WIDTH_ITEM_POSITION_COUNT == 0) {
       VIEW_TYPE_FULL_WIDTH
     } else {
       VIEW_TYPE_REGULAR
@@ -33,6 +36,8 @@ class ArticleListAdapter(diffCallback: ArticleDiffCallback, onArticleListAdapter
   inner class ArticleViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(articleView: ArticleView) {
       binding.data = articleView
+      binding.isFullWidth = itemViewType == VIEW_TYPE_FULL_WIDTH
+      binding.root.setOnClickListener { onArticleListAdapterInteraction.onItemClick(articleView.directUrl) }
     }
   }
 }

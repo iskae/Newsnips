@@ -7,9 +7,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import de.iskae.domain.executor.PostExecutionThread
-import de.iskae.presentation.MainActivity
+import de.iskae.presentation.topheadlines.TopHeadlinesActivity
 import de.iskae.presentation.UiThread
-import de.iskae.presentation.topheadlines.TopHeadlinesFragment
 import de.iskae.presentation.topheadlines.TopHeadlinesViewModel
 
 @Module
@@ -27,9 +26,6 @@ abstract class PresentationModule {
   abstract fun bindTopHeadlinesViewModel(viewModel: TopHeadlinesViewModel): ViewModel
 
   @ContributesAndroidInjector
-  abstract fun contributesMainActivity(): MainActivity
-
-  @ContributesAndroidInjector
-  abstract fun contributesTopHeadlinesFragment(): TopHeadlinesFragment
+  abstract fun contributesMainActivity(): TopHeadlinesActivity
 
 }

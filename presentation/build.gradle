@@ -2,7 +2,6 @@ apply plugin: "${BuildPlugins.androidApplication}"
 apply plugin: "${BuildPlugins.kotlinKapt}"
 apply plugin: "${BuildPlugins.kotlinAndroid}"
 apply plugin: "${BuildPlugins.kotlinAndroidExtensions}"
-apply plugin: "${BuildPlugins.safeArgs}"
 
 android {
   compileSdkVersion AndroidSdk.compile
@@ -62,15 +61,13 @@ dependencies {
 
   implementation AndroidDependencies.lifecycleCommon
   implementation AndroidDependencies.lifecycleRuntime
+  implementation AndroidDependencies.lifecycleExtensions
   kapt AndroidDependencies.lifecycleCompiler
 
   implementation CommonDependencies.timber
   implementation CommonDependencies.picasso
   implementation CommonDependencies.facebookShimmer
 
-  implementation AndroidDependencies.navigationUi
-  implementation AndroidDependencies.navigationFragment
-  implementation AndroidDependencies.navigationFragmentKtx
   implementation AndroidDependencies.paging
   implementation AndroidDependencies.pagingRxJava
 
