@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="de.iskae.presentation.model.ArticleView" />
+
+    <variable
+      name="data"
+      type="ArticleView" />
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/appCompatImageView"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintDimensionRatio="16:9"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:loadImageUrl="@{data.imageUrl}" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/uiArticleTitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:text="@{data.title}"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+      app:layout_constraintEnd_toStartOf="@+id/uiPublishTime"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
+      tools:text="Title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/uiPublishTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      app:layout_constraintBottom_toBottomOf="@+id/uiArticleTitle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
+      tools:text="3 hrs ago" />
+
+    <TextView
+      android:id="@+id/uiContent"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/uiArticleTitle"
+      tools:text="Content" />
+
+    <TextView
+      android:id="@+id/uiFromLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/item_article_from_label"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/uiContent" />
+
+    <TextView
+      android:id="@+id/uiFrom"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:text="@{data.source}"
+      app:layout_constraintBottom_toBottomOf="@+id/uiFromLabel"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/uiFromLabel"
+      app:layout_constraintTop_toTopOf="@+id/uiFromLabel"
+      tools:text="ABC News" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

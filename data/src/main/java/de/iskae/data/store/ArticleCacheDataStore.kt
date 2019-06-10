@@ -10,7 +10,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class ArticleCacheDataStore @Inject constructor(private val articleCache: ArticleCache) : ArticleDataStore {
-  override fun getTopHeadlines(country: Country?, category: Category?): Observable<List<ArticleEntity>> {
+  override fun getTopHeadlines(country: Country?, category: Category?, page: Int): Observable<List<ArticleEntity>> {
     return articleCache.getTopHeadlines(country, category)
   }
 

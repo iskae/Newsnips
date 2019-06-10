@@ -30,13 +30,13 @@ class GetTopHeadlinesTest {
   @Test
   fun getTopHeadlinesForCountrySuccess() {
     val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
-      .thenReturn(Observable.just(articles))
+    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull(), any()))
+        .thenReturn(Observable.just(articles))
 
-    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, Country.DE, null))
-      .test()
+    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, Country.DE, null, 0))
+        .test()
 
-    verify(articleRepository).getTopHeadlines(false, Country.DE.name, null)
+    verify(articleRepository).getTopHeadlines(false, Country.DE.name, null, 0)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -47,13 +47,13 @@ class GetTopHeadlinesTest {
   @Test
   fun getTopHeadlinesForCategorySuccess() {
     val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
-      .thenReturn(Observable.just(articles))
+    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull(), any()))
+        .thenReturn(Observable.just(articles))
 
-    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, null, Category.BUSINESS))
-      .test()
+    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, null, Category.BUSINESS, 0))
+        .test()
 
-    verify(articleRepository).getTopHeadlines(false, null, Category.BUSINESS.name)
+    verify(articleRepository).getTopHeadlines(false, null, Category.BUSINESS.name, 0)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -64,14 +64,14 @@ class GetTopHeadlinesTest {
   @Test
   fun getTopHeadlinesForCountryAndCategorySuccess() {
     val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
-      .thenReturn(Observable.just(articles))
+    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull(), any()))
+        .thenReturn(Observable.just(articles))
 
     val testObserver =
-      getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, Country.DE, Category.BUSINESS))
-        .test()
+        getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, Country.DE, Category.BUSINESS, 0))
+            .test()
 
-    verify(articleRepository).getTopHeadlines(false, Country.DE.name, Category.BUSINESS.name)
+    verify(articleRepository).getTopHeadlines(false, Country.DE.name, Category.BUSINESS.name, 0)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -86,7 +86,7 @@ class GetTopHeadlinesTest {
 
   @Test(expected = IllegalArgumentException::class)
   fun getTopHeadlinesFailsWhenParamsDoesNotIncludeRequiredParameters() {
-    getTopHeadlines.buildUseCaseObservable(GetTopHeadlines.Params(true, null, null)).test()
+    getTopHeadlines.buildUseCaseObservable(GetTopHeadlines.Params(true, null, null, 0)).test()
   }
 
 }

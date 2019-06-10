@@ -7,7 +7,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface ArticleDataStore {
-  fun getTopHeadlines(country: Country?, category: Category?): Observable<List<ArticleEntity>>
+  fun getTopHeadlines(country: Country?, category: Category?, page: Int): Observable<List<ArticleEntity>>
   fun saveTopHeadlines(country: Country?, category: Category?, articles: List<ArticleEntity>): Completable
   fun clearTopHeadlines(country: Country?, category: Category?): Completable
 }

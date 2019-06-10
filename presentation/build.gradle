@@ -66,10 +66,13 @@ dependencies {
 
   implementation CommonDependencies.timber
   implementation CommonDependencies.picasso
+  implementation CommonDependencies.facebookShimmer
 
   implementation AndroidDependencies.navigationUi
   implementation AndroidDependencies.navigationFragment
   implementation AndroidDependencies.navigationFragmentKtx
+  implementation AndroidDependencies.paging
+  implementation AndroidDependencies.pagingRxJava
 
   testImplementation TestingDependencies.assertJ
   testImplementation TestingDependencies.junit

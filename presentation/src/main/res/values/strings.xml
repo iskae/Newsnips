@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">Newsnips</string>
+  <string name="item_article_from_label">From:</string>
 </resources>

@@ -1,5 +1,6 @@
 package de.iskae.data.store
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -21,7 +22,7 @@ class ArticleRemoteDataStoreTest {
     val articleEntityList = makeArticleEntityList(5)
     stubRemoteGetTopHeadlines(Observable.just(articleEntityList))
 
-    val testObserver = remoteDataStore.getTopHeadlines(Country.DE, Category.BUSINESS).test()
+    val testObserver = remoteDataStore.getTopHeadlines(Country.DE, Category.BUSINESS, 0).test()
     testObserver.assertNoErrors()
     testObserver.assertComplete()
     testObserver.assertValueCount(1)
@@ -39,7 +40,7 @@ class ArticleRemoteDataStoreTest {
   }
 
   private fun stubRemoteGetTopHeadlines(observable: Observable<List<ArticleEntity>>) {
-    whenever(remoteDataStore.getTopHeadlines(anyOrNull(), anyOrNull()))
+    whenever(remoteDataStore.getTopHeadlines(anyOrNull(), anyOrNull(), any()))
         .thenReturn(observable)
   }
 }

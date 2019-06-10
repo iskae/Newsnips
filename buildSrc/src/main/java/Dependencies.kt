@@ -20,6 +20,7 @@ object Versions {
   const val javaxInject = "1"
   const val javaxAnnotation = "1.0"
   const val threeTenAbp = "1.2.1"
+  const val facebookShimmer = "0.4.0"
 
   //Android
   const val jetpack = "1.1.0"
@@ -90,6 +91,7 @@ object CommonDependencies {
   const val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
   const val javaxAnnotation = "javax.annotation:jsr250-api:${Versions.javaxAnnotation}"
   const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenAbp}"
+  const val facebookShimmer = "com.facebook.shimmer:shimmer:${Versions.facebookShimmer}"
 }
 
 object AndroidDependencies {
@@ -112,6 +114,7 @@ object AndroidDependencies {
   const val roomCompiler = "android.arch.persistence.room:compiler:${Versions.room}"
   const val roomRxJava = "android.arch.persistence.room:rxjava2:${Versions.room}"
   const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
+  const val pagingRxJava = "androidx.paging:paging-rxjava2:${Versions.paging}"
 }
 
 object KotlinDependencies {

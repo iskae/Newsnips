@@ -10,8 +10,8 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class GetTopHeadlines @Inject constructor(
-  private val articleRepository: ArticleRepository,
-  postExecutionThread: PostExecutionThread
+    private val articleRepository: ArticleRepository,
+    postExecutionThread: PostExecutionThread
 ) : ObservableUseCase<List<Article>, GetTopHeadlines.Params?>(postExecutionThread) {
 
   override fun buildUseCaseObservable(params: Params?): Observable<List<Article>> {
@@ -21,13 +21,13 @@ class GetTopHeadlines @Inject constructor(
     if (params.category == null && params.country == null) {
       throw  IllegalArgumentException("Parameter required! Please provide either a country or a category")
     }
-    return articleRepository.getTopHeadlines(params.forceRefresh, params.country, params.category)
+    return articleRepository.getTopHeadlines(params.forceRefresh, params.country, params.category, params.page)
   }
 
-  data class Params constructor(val forceRefresh: Boolean, val country: String?, val category: String?) {
+  data class Params constructor(val forceRefresh: Boolean, val country: String?, val category: String?, val page: Int) {
     companion object {
-      fun forCountryAndCategory(forceRefresh: Boolean, country: Country?, category: Category?): Params {
-        return Params(forceRefresh, country?.name, category?.name)
+      fun forCountryAndCategory(forceRefresh: Boolean, country: Country?, category: Category?, page: Int): Params {
+        return Params(forceRefresh, country?.name, category?.name, page)
       }
     }
   }

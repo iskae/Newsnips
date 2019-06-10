@@ -4,5 +4,5 @@ import de.iskae.domain.model.Article
 import io.reactivex.Observable
 
 interface ArticleRepository {
-  fun getTopHeadlines(forceRefresh: Boolean, countryCode: String?, category: String?): Observable<List<Article>>
+  fun getTopHeadlines(forceRefresh: Boolean, countryCode: String?, category: String?, page: Int): Observable<List<Article>>
 }

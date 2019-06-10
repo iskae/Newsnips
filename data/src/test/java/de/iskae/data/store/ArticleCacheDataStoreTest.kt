@@ -13,6 +13,8 @@ import de.iskae.data.repository.ArticleCache
 import io.reactivex.Completable
 import io.reactivex.Observable
 import org.junit.Test
+import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.anyInt
 
 class ArticleCacheDataStoreTest {
 
@@ -24,7 +26,7 @@ class ArticleCacheDataStoreTest {
     val articleEntityList = makeArticleEntityList(5)
     stubCacheGetTopHeadlines(Observable.just(articleEntityList))
 
-    val testObserver = articleCacheDataStore.getTopHeadlines(Country.DE, Category.BUSINESS).test()
+    val testObserver = articleCacheDataStore.getTopHeadlines(Country.DE, Category.BUSINESS, 0).test()
     verify(articleCache).getTopHeadlines(Country.DE, Category.BUSINESS)
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -52,7 +54,7 @@ class ArticleCacheDataStoreTest {
   }
 
   private fun stubCacheGetTopHeadlines(observable: Observable<List<ArticleEntity>>) {
-    whenever(articleCacheDataStore.getTopHeadlines(anyOrNull(), anyOrNull()))
+    whenever(articleCacheDataStore.getTopHeadlines(anyOrNull(), anyOrNull(), 0))
         .thenReturn(observable)
   }
 

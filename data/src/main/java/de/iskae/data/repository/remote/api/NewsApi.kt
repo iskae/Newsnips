@@ -10,8 +10,9 @@ interface NewsApi {
 
   @GET("v2/top-headlines")
   fun getTopHeadlines(
-    @Query("country") countryCode: String?,
-    @Query("category") category: String?,
-    @Query("pageSize") pageSize: String = PAGE_SIZE.toString()
+      @Query("country") countryCode: String?,
+      @Query("category") category: String?,
+      @Query("pageSize") pageSize: Int = PAGE_SIZE,
+      @Query("page") page: Int
   ): Observable<TopHeadlinesResponseModel>
 }

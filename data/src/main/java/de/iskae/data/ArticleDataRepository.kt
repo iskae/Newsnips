@@ -16,7 +16,7 @@ class ArticleDataRepository @Inject constructor(private val mapper: ArticleMappe
                                                 private val articleCache: ArticleCache,
                                                 private val dataStoreFactory: ArticleDataStoreFactory) : ArticleRepository {
 
-  override fun getTopHeadlines(forceRefresh: Boolean, countryCode: String?, category: String?): Observable<List<Article>> {
+  override fun getTopHeadlines(forceRefresh: Boolean, countryCode: String?, category: String?, page: Int): Observable<List<Article>> {
     val country = countryCode?.let { Country.valueOf(it) }
     val category = category?.let { Category.valueOf(it) }
     return Observable.zip(articleCache.isTopHeadlinesCached(country, category).toObservable(),
@@ -26,7 +26,7 @@ class ArticleDataRepository @Inject constructor(private val mapper: ArticleMappe
         })
         .flatMap {
           dataStoreFactory.getDataStore(forceRefresh, it.first, it.second)
-              .getTopHeadlines(country, category)
+              .getTopHeadlines(country, category, page)
         }
         .flatMap { topHeadlines ->
           dataStoreFactory.getCacheDataStore()

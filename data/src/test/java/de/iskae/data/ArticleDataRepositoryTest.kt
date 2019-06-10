@@ -10,7 +10,6 @@ import de.iskae.data.factory.ArticleFactory.makeArticleEntityList
 import de.iskae.data.mapper.ArticleMapper
 import de.iskae.data.repository.ArticleCache
 import de.iskae.data.repository.ArticleDataStore
-import de.iskae.data.store.ArticleCacheDataStore
 import de.iskae.data.store.ArticleDataStoreFactory
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -36,7 +35,7 @@ class ArticleDataRepositoryTest {
         .thenReturn(store)
     whenever(dataStoreFactory.getDataStore(any(), any(), any()))
         .thenReturn(store)
-    whenever(store.getTopHeadlines(anyOrNull(), anyOrNull()))
+    whenever(store.getTopHeadlines(anyOrNull(), anyOrNull(), any()))
         .thenReturn(Observable.just(articleEntityList))
     whenever(store.saveTopHeadlines(anyOrNull(), anyOrNull(), any()))
         .thenReturn(Completable.complete())
@@ -47,7 +46,7 @@ class ArticleDataRepositoryTest {
     whenever(cache.saveTopHeadlines(any()))
         .thenReturn(Completable.complete())
 
-    val testObserver = articleDataRepository.getTopHeadlines(false, Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = articleDataRepository.getTopHeadlines(false, Country.DE.name, Category.BUSINESS.name, 0).test()
     testObserver.assertNoErrors()
     testObserver.assertComplete()
     testObserver.assertValueCount(1)

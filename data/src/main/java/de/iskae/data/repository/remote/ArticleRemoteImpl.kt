@@ -11,8 +11,9 @@ import javax.inject.Inject
 
 class ArticleRemoteImpl @Inject constructor(private val newsApi: NewsApi,
                                             private val articleResponseModelMapper: ArticleResponseModelMapper) : ArticleRemote {
-  override fun getTopHeadlines(country: Country?, category: Category?): Observable<List<ArticleEntity>> {
-    return newsApi.getTopHeadlines(country?.name, category?.name)
+
+  override fun getTopHeadlines(country: Country?, category: Category?, page: Int): Observable<List<ArticleEntity>> {
+    return newsApi.getTopHeadlines(country?.name, category?.name, page = page)
         .map { topHeadlinesResponseModel ->
           topHeadlinesResponseModel.articles.map { articleResponseModel ->
             articleResponseModelMapper.mapFromModel(articleResponseModel)

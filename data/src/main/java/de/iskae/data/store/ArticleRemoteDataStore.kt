@@ -10,8 +10,9 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class ArticleRemoteDataStore @Inject constructor(private val articleRemote: ArticleRemote) : ArticleDataStore {
-  override fun getTopHeadlines(country: Country?, category: Category?): Observable<List<ArticleEntity>> {
-    return articleRemote.getTopHeadlines(country, category)
+
+  override fun getTopHeadlines(country: Country?, category: Category?, page: Int): Observable<List<ArticleEntity>> {
+    return articleRemote.getTopHeadlines(country, category, page)
   }
 
   override fun saveTopHeadlines(country: Country?, category: Category?, articles: List<ArticleEntity>): Completable {
