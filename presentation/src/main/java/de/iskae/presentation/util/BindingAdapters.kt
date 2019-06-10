@@ -3,7 +3,8 @@ package de.iskae.presentation.util
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 object BindingAdapters {
   @JvmStatic
@@ -16,7 +17,7 @@ object BindingAdapters {
   @BindingAdapter("loadImageUrl")
   fun loadImageUrl(iv: ImageView, imageUrl: String?) {
     imageUrl?.let {
-      Picasso.get().load(it).into(iv)
+      Glide.with(iv).load(it).diskCacheStrategy(DiskCacheStrategy.ALL).into(iv)
     }
   }
 }

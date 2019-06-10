@@ -21,6 +21,7 @@ object Versions {
   const val javaxAnnotation = "1.0"
   const val threeTenAbp = "1.2.1"
   const val facebookShimmer = "0.4.0"
+  const val glide = "4.9.0"
 
   //Android
   const val jetpack = "1.1.0"
@@ -48,6 +49,7 @@ object Versions {
   const val moshi = "1.4.0"
   const val okhttp = "3.9.1"
   const val retrofit = "2.3.0"
+  const val gson = "2.8.5"
 
   //Testing
   const val junit = "4.13-beta-3"
@@ -92,6 +94,7 @@ object CommonDependencies {
   const val javaxAnnotation = "javax.annotation:jsr250-api:${Versions.javaxAnnotation}"
   const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenAbp}"
   const val facebookShimmer = "com.facebook.shimmer:shimmer:${Versions.facebookShimmer}"
+  const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 }
 
 object AndroidDependencies {
@@ -143,6 +146,7 @@ object NetworkDependencies {
   const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
   const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
   const val retrofitRxjavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+  const val gson = "com.google.code.gson:gson:${Versions.gson}"
 }
 
 object TestingDependencies {

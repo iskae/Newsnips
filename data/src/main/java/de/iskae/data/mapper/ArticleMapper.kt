@@ -7,30 +7,29 @@ import javax.inject.Inject
 class ArticleMapper @Inject constructor() : EntityMapper<ArticleEntity, Article> {
   override fun mapToEntity(domain: Article): ArticleEntity {
     return ArticleEntity(
-        domain.country,
-        domain.category,
-        domain.source,
-        domain.author,
-        domain.title,
-        domain.description,
-        domain.directUrl,
-        domain.imageUrl,
-        domain.publishedTime,
-        domain.content)
+        articleIdentifier = domain.articleIdentifier,
+        source = domain.source,
+        author = domain.author,
+        title = domain.title,
+        description = domain.description,
+        directUrl = domain.directUrl,
+        imageUrl = domain.imageUrl,
+        publishedTime = domain.publishedTime,
+        content = domain.content)
   }
 
   override fun mapFromEntity(entity: ArticleEntity): Article {
     return Article(
-        entity.countryCode,
-        entity.category,
-        entity.source,
-        entity.author,
-        entity.title,
-        entity.description,
-        entity.directUrl,
-        entity.imageUrl,
-        entity.publishedTime,
-        entity.content)
+        articleIdentifier = entity.articleIdentifier,
+        source = entity.source,
+        author = entity.author,
+        title = entity.title,
+        description = entity.description,
+        directUrl = entity.directUrl,
+        imageUrl = entity.imageUrl,
+        publishedTime = entity.publishedTime,
+        content = entity.content
+    )
   }
 
 }

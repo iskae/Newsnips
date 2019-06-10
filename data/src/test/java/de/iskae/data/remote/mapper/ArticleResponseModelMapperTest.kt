@@ -2,6 +2,7 @@ package de.iskae.data.remote.mapper
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import de.iskae.core.test.DataFactory.randomInt
 import de.iskae.core.test.DataFactory.randomString
 import de.iskae.data.core.topheadlines.TopHeadlinesPreferencesManager
 import de.iskae.data.factory.ArticleFactory.makeArticleResponseModel
@@ -27,23 +28,26 @@ class ArticleResponseModelMapperTest {
     assertThat(responseModel.url).isEqualTo(articleEntity.directUrl)
     assertThat(responseModel.urlToImage).isEqualTo(articleEntity.imageUrl)
     assertThat(responseModel.source.name).isEqualTo(articleEntity.source)
-    assertThat(articleEntity.category).isNull()
-    assertThat(articleEntity.countryCode).isNull()
+    assertThat(articleEntity.articleIdentifier).isNotNull
   }
 
   @Test
   fun mapFromResponseModelMapsDataFromTopHeadlinesPreferencesManager() {
     val countryCode = randomString()
     val category = randomString()
+    val pageNumber = randomInt()
     whenever(topHeadlinesPreferencesManager.getCountryPreference())
         .thenReturn(countryCode)
     whenever(topHeadlinesPreferencesManager.getCategoryPreference())
         .thenReturn(category)
+    whenever(topHeadlinesPreferencesManager.getLastRequestedPageNumber())
+        .thenReturn(pageNumber)
 
     val responseModel = makeArticleResponseModel()
     val articleEntity = articleResponseModelMapper.mapFromModel(responseModel)
 
-    assertThat(articleEntity.countryCode).isEqualTo(countryCode)
-    assertThat(articleEntity.category).isEqualTo(category)
+    assertThat(articleEntity.articleIdentifier.countryCode).isEqualTo(countryCode)
+    assertThat(articleEntity.articleIdentifier.category).isEqualTo(category)
+    assertThat(articleEntity.articleIdentifier.page).isEqualTo(pageNumber)
   }
 }

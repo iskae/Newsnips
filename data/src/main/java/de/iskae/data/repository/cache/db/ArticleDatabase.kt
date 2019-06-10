@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import de.iskae.data.repository.cache.dao.CachedArticleDao
 import de.iskae.data.repository.cache.dao.ConfigDao
 import de.iskae.data.repository.cache.model.CachedArticle
@@ -11,6 +12,7 @@ import de.iskae.data.repository.cache.model.Config
 import javax.inject.Inject
 
 @Database(entities = [CachedArticle::class, Config::class], version = 1)
+@TypeConverters(value = [(Converters::class)])
 abstract class ArticleDatabase @Inject constructor() : RoomDatabase() {
 
   abstract fun cachedArticleDao(): CachedArticleDao

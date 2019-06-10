@@ -1,8 +1,7 @@
 package de.iskae.domain.model
 
 data class Article(
-    val country: String?,
-    val category: String?,
+    val articleIdentifier: ArticleIdentifier,
     val source: String,
     val author: String?,
     val title: String,

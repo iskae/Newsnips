@@ -27,7 +27,7 @@ class TopHeadlinesViewModel @Inject constructor(
   private val articleDataSourceFactory: ArticleDataSourceFactory
 
   init {
-    setCountry(Country.DE)
+    setCountry(Country.US)
     articleDataSourceFactory = ArticleDataSourceFactory(getTopHeadlines, articleViewMapper, topHeadlinesPreferencesManager)
     val config = PagedList.Config.Builder()
         .setPageSize(PAGE_SIZE)
@@ -46,6 +46,10 @@ class TopHeadlinesViewModel @Inject constructor(
 
   fun setCategory(category: Category) {
     topHeadlinesPreferencesManager.setCategoryPreference(category)
+  }
+
+  fun retry() {
+    articleDataSourceFactory.articlesDataSource.value?.retry()
   }
 
 }

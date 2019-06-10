@@ -2,9 +2,7 @@ package de.iskae.data.cache.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import de.iskae.core.constants.Category
-import de.iskae.core.constants.Country
-import de.iskae.data.factory.ArticleFactory
+import de.iskae.data.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.data.factory.ArticleFactory.makeConfig
 import de.iskae.data.repository.cache.db.ArticleDatabase
 import org.junit.After
@@ -33,10 +31,11 @@ class ConfigDaoTest {
 
   @Test
   fun saveConfigSuccessful() {
-    val config = makeConfig()
+    val articleIdentifier = makeArticleIdentifier()
+    val config = makeConfig(articleIdentifier)
     database.configDao().insertConfig(config)
 
-    val testObserver = database.configDao().getConfigByCountryOrCategory(Country.DE.name,null).test()
+    val testObserver = database.configDao().getConfig(articleIdentifier).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(config)

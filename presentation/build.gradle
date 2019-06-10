@@ -65,8 +65,7 @@ dependencies {
   kapt AndroidDependencies.lifecycleCompiler
 
   implementation CommonDependencies.timber
-  implementation CommonDependencies.picasso
-  implementation CommonDependencies.facebookShimmer
+  implementation CommonDependencies.glide
 
   implementation AndroidDependencies.paging
   implementation AndroidDependencies.pagingRxJava

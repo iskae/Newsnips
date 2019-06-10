@@ -29,6 +29,7 @@ dependencies {
   implementation NetworkDependencies.moshi
   implementation NetworkDependencies.retrofitMoshiConverter
   implementation NetworkDependencies.retrofitRxjavaAdapter
+  implementation NetworkDependencies.gson
 
   api AndroidDependencies.roomRuntime
   implementation AndroidDependencies.roomRxJava

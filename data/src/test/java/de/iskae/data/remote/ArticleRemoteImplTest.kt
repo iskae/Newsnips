@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import de.iskae.core.constants.Category
 import de.iskae.core.constants.Country
+import de.iskae.data.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.data.factory.ArticleFactory.makeTopHeadlinesResponseModel
 import de.iskae.data.repository.remote.ArticleRemoteImpl
 import de.iskae.data.repository.remote.api.NewsApi
@@ -29,7 +30,7 @@ class ArticleRemoteImplTest {
     val topHeadlinesResponseModel = makeTopHeadlinesResponseModel(5)
     stubNewsApi(Observable.just(topHeadlinesResponseModel))
 
-    val testObserver = articleRemoteImpl.getTopHeadlines(Country.DE, Category.BUSINESS,0).test()
+    val testObserver = articleRemoteImpl.getTopHeadlines(makeArticleIdentifier()).test()
 
     verify(newsApi).getTopHeadlines(Country.DE.name, Category.BUSINESS.name, 21, 0)
     testObserver.assertNoErrors()
@@ -42,7 +43,7 @@ class ArticleRemoteImplTest {
 
   private fun stubNewsApi(observable: Observable<TopHeadlinesResponseModel>) {
     whenever(newsApi.getTopHeadlines(anyOrNull(), anyOrNull(), any(), any()))
-      .thenReturn(observable)
+        .thenReturn(observable)
   }
 
 }

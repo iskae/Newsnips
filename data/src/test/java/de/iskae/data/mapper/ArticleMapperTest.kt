@@ -2,6 +2,7 @@ package de.iskae.data.mapper
 
 import de.iskae.data.factory.ArticleFactory.makeArticle
 import de.iskae.data.factory.ArticleFactory.makeArticleEntity
+import de.iskae.data.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.data.model.ArticleEntity
 import de.iskae.domain.model.Article
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +14,7 @@ class ArticleMapperTest {
 
   @Test
   fun mapFromEntityMapsDataToDomain() {
-    val articleEntity = makeArticleEntity()
+    val articleEntity = makeArticleEntity(makeArticleIdentifier())
     val article = mapper.mapFromEntity(articleEntity)
 
     assertDataEquals(articleEntity, article)
@@ -21,15 +22,16 @@ class ArticleMapperTest {
 
   @Test
   fun mapToEntityMapsDataFromDomain() {
-    val article = makeArticle()
+    val article = makeArticle(makeArticleIdentifier())
     val articleEntity = mapper.mapToEntity(article)
 
     assertDataEquals(articleEntity, article)
   }
 
   private fun assertDataEquals(articleEntity: ArticleEntity, article: Article) {
-    assertThat(articleEntity.category).isEqualTo(article.category)
-    assertThat(articleEntity.countryCode).isEqualTo(article.country)
+    assertThat(articleEntity.articleIdentifier.page).isEqualTo(article.articleIdentifier.page)
+    assertThat(articleEntity.articleIdentifier.countryCode).isEqualTo(article.articleIdentifier.countryCode)
+    assertThat(articleEntity.articleIdentifier.category).isEqualTo(article.articleIdentifier.category)
     assertThat(articleEntity.description).isEqualTo(article.description)
     assertThat(articleEntity.author).isEqualTo(article.author)
     assertThat(articleEntity.content).isEqualTo(article.content)

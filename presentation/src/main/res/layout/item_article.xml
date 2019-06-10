@@ -13,88 +13,102 @@
 
     <variable
       name="isFullWidth"
-      type="Boolean" />
+      type="boolean" />
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/uiItemContainer"
+  <com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/resting_elevation"
+    app:cardUseCompatPadding="true">
 
-    <androidx.appcompat.widget.AppCompatImageView
-      android:id="@+id/appCompatImageView"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:scaleType="centerCrop"
-      android:src="@drawable/placeholder"
-      app:layout_constraintDimensionRatio="16:9"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:loadImageUrl="@{data.imageUrl}" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/uiItemContainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/uiArticleTitle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="8dp"
-      android:text="@{data.title}"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-      app:layout_constraintEnd_toStartOf="@+id/uiPublishTime"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
-      tools:text="Title" />
+      <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_big"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uiFrom"
+        app:loadImageUrl="@{data.imageUrl}" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-      android:id="@+id/uiPublishTime"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
-      android:text="@{String.format(@string/item_hours_ago,data.publishedHourDifference)}"
-      app:layout_constraintBottom_toBottomOf="@+id/uiArticleTitle"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="@+id/uiArticleTitle"
-      tools:text="3 hrs ago" />
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/uiArticleTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:text="@{data.title}"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
+        tools:text="Title" />
 
-    <TextView
-      android:id="@+id/uiContentOrDescription"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginBottom="16dp"
-      android:text="@{isFullWidth? data.content:data.description}"
-      app:layout_constraintBottom_toTopOf="@+id/uiFromLabel"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/uiArticleTitle"
-      tools:text="Content" />
+      <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/uiPublishTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:text="@{String.format(@string/item_hours_ago,data.publishedHourDifference)}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3 hrs ago" />
 
-    <TextView
-      android:id="@+id/uiFromLabel"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginBottom="8dp"
-      android:text="@string/item_article_from_label"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+      <TextView
+        android:id="@+id/uiContentOrDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_big"
+        android:text="@{isFullWidth? data.content:data.description}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uiArticleTitle"
+        tools:text="Content" />
 
-    <TextView
-      android:id="@+id/uiFrom"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:layout_marginEnd="8dp"
-      android:text="@{data.source}"
-      app:layout_constraintBottom_toBottomOf="@+id/uiFromLabel"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/uiFromLabel"
-      app:layout_constraintTop_toTopOf="@+id/uiFromLabel"
-      tools:text="ABC News" />
+      <TextView
+        android:id="@+id/uiFromLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_big"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:text="@string/item_article_from_label"
+        app:layout_constraintEnd_toStartOf="@+id/uiFrom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+      <TextView
+        android:id="@+id/uiFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_big"
+        android:text="@{data.source}"
+        app:layout_constraintBottom_toBottomOf="@+id/uiFromLabel"
+        app:layout_constraintStart_toEndOf="@+id/uiFromLabel"
+        app:layout_constraintTop_toTopOf="@+id/uiFromLabel"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="ABC News" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.card.MaterialCardView>
+
 
 </layout>

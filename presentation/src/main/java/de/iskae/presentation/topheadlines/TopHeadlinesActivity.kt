@@ -3,6 +3,7 @@ package de.iskae.presentation.topheadlines
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -40,15 +41,30 @@ class TopHeadlinesActivity : AppCompatActivity(), OnArticleListAdapterInteractio
     binding = DataBindingUtil.setContentView(this, R.layout.activity_top_headlines)
 
     initRecyclerView()
+
+    binding.uiRetryButton.setOnClickListener {
+      topHeadlinesViewModel.retry()
+    }
     topHeadlinesViewModel.getResource().observe(this, Observer {
       when (it) {
-        is Resource.Loading -> binding.isLoading = true
+        is Resource.Loading -> {
+          binding.apply {
+            isLoading = true
+            uiRetryButton.visibility = View.GONE
+          }
+        }
         is Resource.Error -> {
-          binding.isLoading = false
+          binding.apply {
+            isLoading = false
+            uiRetryButton.visibility = View.VISIBLE
+          }
           Timber.e(it.throwable)
         }
         is Resource.Success -> {
-          binding.isLoading = false
+          binding.apply {
+            isLoading = false
+            uiRetryButton.visibility = View.GONE
+          }
         }
       }
     })
@@ -76,7 +92,6 @@ class TopHeadlinesActivity : AppCompatActivity(), OnArticleListAdapterInteractio
     binding.uiTopHeadlinesRecycler.apply {
       layoutManager = manager
       adapter = articleListAdapter
-      addItemDecoration(DividerItemDecoration(context, manager.orientation))
     }
   }
 
