@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.AndroidInjection
 import de.iskae.presentation.R
@@ -100,7 +99,7 @@ class TopHeadlinesActivity : AppCompatActivity(), OnArticleListAdapterInteractio
     if (intent.resolveActivity(packageManager) != null) {
       startActivity(intent)
     } else {
-      Toast.makeText(this, getString(R.string.browser_not_fount_toast), Toast.LENGTH_SHORT).show()
+      Toast.makeText(this, getString(R.string.browser_not_found_toast), Toast.LENGTH_SHORT).show()
     }
   }
 
