@@ -9,6 +9,10 @@ android {
     minSdkVersion AndroidSdk.min
     targetSdkVersion AndroidSdk.target
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -25,6 +29,7 @@ dependencies {
   implementation NetworkDependencies.moshi
   implementation NetworkDependencies.retrofitMoshiConverter
   implementation NetworkDependencies.retrofitRxjavaAdapter
+  implementation NetworkDependencies.gson
 
   api AndroidDependencies.roomRuntime
   implementation AndroidDependencies.roomRxJava
@@ -43,6 +48,3 @@ dependencies {
   androidTestImplementation TestingDependencies.runner
   androidTestImplementation TestingDependencies.rules
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"

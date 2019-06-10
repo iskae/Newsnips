@@ -1,7 +1,8 @@
 apply plugin: "${BuildPlugins.kotlin}"
 
 dependencies {
-    implementation KotlinDependencies.stdLib
+  implementation KotlinDependencies.stdLib
+  implementation CommonDependencies.threeTenAbp
 }
 
 sourceCompatibility = "1.8"

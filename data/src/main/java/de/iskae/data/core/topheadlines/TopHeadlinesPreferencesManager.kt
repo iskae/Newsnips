@@ -25,6 +25,14 @@ class TopHeadlinesPreferencesManager @Inject constructor(private val application
     return getSharedPreferences().getString(KEY_PREFERENCE_CATEGORY, null)
   }
 
+  fun getLastRequestedPageNumber(): Int {
+    return getSharedPreferences().getInt(KEY_PREFERENCE_LAST_REQUESTED_PAGE_NUMBER, 0)
+  }
+
+  fun setLastRequestedPageNumber(pageNumber: Int) {
+    getSharedPreferences().edit().putInt(KEY_PREFERENCE_LAST_REQUESTED_PAGE_NUMBER, pageNumber).apply()
+  }
+
   fun clearCountryPreference() {
     getSharedPreferences().edit().remove(KEY_PREFERENCE_COUNTRY).apply()
   }

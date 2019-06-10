@@ -2,8 +2,7 @@ package de.iskae.data.cache.dao
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import de.iskae.core.constants.Category
-import de.iskae.core.constants.Country
+import de.iskae.data.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.data.factory.ArticleFactory.makeCachedArticleList
 import de.iskae.data.repository.cache.db.ArticleDatabase
 import org.junit.After
@@ -32,10 +31,11 @@ class CachedArticleDaoTest {
 
   @Test
   fun getArticlesSuccessful() {
-    val articles = makeCachedArticleList(10)
+    val articleIdentifier = makeArticleIdentifier()
+    val articles = makeCachedArticleList(10, articleIdentifier)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticles(articleIdentifier).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
@@ -43,35 +43,37 @@ class CachedArticleDaoTest {
 
   @Test
   fun clearArticlesSuccessful() {
-    val articles = makeCachedArticleList(10)
+    val articleIdentifier = makeArticleIdentifier()
+    val articles = makeCachedArticleList(10, articleIdentifier)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticles(articleIdentifier).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
 
-    database.cachedArticleDao().deleteArticles(Country.DE.name, Category.BUSINESS.name)
+    database.cachedArticleDao().deleteArticles(articleIdentifier)
 
-    val emptyDbTestObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val emptyDbTestObserver = database.cachedArticleDao().getArticles(articleIdentifier).test()
     emptyDbTestObserver.assertNoErrors()
     emptyDbTestObserver.assertValueCount(1)
     emptyDbTestObserver.assertValue(emptyList())
   }
 
   @Test
-  fun deleteAllArticlesSuccessful(){
-    val articles = makeCachedArticleList(10)
+  fun deleteAllArticlesSuccessful() {
+    val articleIdentifier = makeArticleIdentifier()
+    val articles = makeCachedArticleList(10, articleIdentifier)
     database.cachedArticleDao().insertArticles(articles)
 
-    val testObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val testObserver = database.cachedArticleDao().getArticles(articleIdentifier).test()
     testObserver.assertNoErrors()
     testObserver.assertValueCount(1)
     testObserver.assertValue(articles)
 
     database.cachedArticleDao().deleteAllArticles()
 
-    val emptyDbTestObserver = database.cachedArticleDao().getArticles(Country.DE.name, Category.BUSINESS.name).test()
+    val emptyDbTestObserver = database.cachedArticleDao().getArticles(articleIdentifier).test()
     emptyDbTestObserver.assertNoErrors()
     emptyDbTestObserver.assertValueCount(1)
     emptyDbTestObserver.assertValue(emptyList())

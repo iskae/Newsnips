@@ -1,16 +1,15 @@
 package de.iskae.domain.interactor.topheadlines
 
 import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import de.iskae.core.constants.Category
 import de.iskae.core.constants.Country
 import de.iskae.domain.executor.PostExecutionThread
+import de.iskae.domain.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.domain.factory.ArticleFactory.makeArticleList
-import de.iskae.domain.interactor.topheadlines.GetTopHeadlines.Params.Companion.forCategory
-import de.iskae.domain.interactor.topheadlines.GetTopHeadlines.Params.Companion.forCountry
 import de.iskae.domain.interactor.topheadlines.GetTopHeadlines.Params.Companion.forCountryAndCategory
+import de.iskae.domain.model.ArticleIdentifier
 import de.iskae.domain.repository.ArticleRepository
 import io.reactivex.Observable
 import org.junit.Before
@@ -31,14 +30,15 @@ class GetTopHeadlinesTest {
 
   @Test
   fun getTopHeadlinesForCountrySuccess() {
-    val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
+    val articleIdentifier = ArticleIdentifier(Country.DE.name, null, 0)
+    val articles = makeArticleList(5, articleIdentifier)
+    whenever(articleRepository.getTopHeadlines(any(), any()))
         .thenReturn(Observable.just(articles))
 
-    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountry(false, Country.DE))
+    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, articleIdentifier))
         .test()
 
-    verify(articleRepository).getTopHeadlines(false, Country.DE.name, null)
+    verify(articleRepository).getTopHeadlines(false, articleIdentifier)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -48,14 +48,15 @@ class GetTopHeadlinesTest {
 
   @Test
   fun getTopHeadlinesForCategorySuccess() {
-    val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
+    val articleIdentifier = ArticleIdentifier(countryCode = null, category = Category.BUSINESS.name, page = 0)
+    val articles = makeArticleList(5, articleIdentifier)
+    whenever(articleRepository.getTopHeadlines(any(), any()))
         .thenReturn(Observable.just(articles))
 
-    val testObserver = getTopHeadlines.buildUseCaseObservable(forCategory(false, Category.BUSINESS))
+    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, articleIdentifier))
         .test()
 
-    verify(articleRepository).getTopHeadlines(false, null, Category.BUSINESS.name)
+    verify(articleRepository).getTopHeadlines(false, articleIdentifier)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -65,14 +66,16 @@ class GetTopHeadlinesTest {
 
   @Test
   fun getTopHeadlinesForCountryAndCategorySuccess() {
-    val articles = makeArticleList(5)
-    whenever(articleRepository.getTopHeadlines(any(), anyOrNull(), anyOrNull()))
+    val articleIdentifier = makeArticleIdentifier()
+    val articles = makeArticleList(5, articleIdentifier)
+
+    whenever(articleRepository.getTopHeadlines(any(), any()))
         .thenReturn(Observable.just(articles))
+    val testObserver =
+        getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, articleIdentifier))
+            .test()
 
-    val testObserver = getTopHeadlines.buildUseCaseObservable(forCountryAndCategory(false, Country.DE, Category.BUSINESS))
-        .test()
-
-    verify(articleRepository).getTopHeadlines(false, Country.DE.name, Category.BUSINESS.name)
+    verify(articleRepository).getTopHeadlines(false, articleIdentifier)
 
     testObserver.assertNoErrors()
     testObserver.assertComplete()
@@ -87,7 +90,7 @@ class GetTopHeadlinesTest {
 
   @Test(expected = IllegalArgumentException::class)
   fun getTopHeadlinesFailsWhenParamsDoesNotIncludeRequiredParameters() {
-    getTopHeadlines.buildUseCaseObservable(GetTopHeadlines.Params(true, null, null)).test()
+    getTopHeadlines.buildUseCaseObservable(GetTopHeadlines.Params(true, ArticleIdentifier(null, null, 0))).test()
   }
 
 }

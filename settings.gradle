@@ -1,1 +1,1 @@
-include ':app', ProjectModules.data, ProjectModules.domain, ProjectModules.core
+include ProjectModules.presentation,ProjectModules.data, ProjectModules.domain, ProjectModules.core

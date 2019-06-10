@@ -2,12 +2,12 @@ package de.iskae.data.cache
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import de.iskae.core.constants.Category
-import de.iskae.core.constants.Country
 import de.iskae.data.factory.ArticleFactory.makeArticleEntityList
+import de.iskae.data.factory.ArticleFactory.makeArticleIdentifier
 import de.iskae.data.repository.cache.ArticleCacheImpl
 import de.iskae.data.repository.cache.db.ArticleDatabase
 import de.iskae.data.repository.cache.mapper.CachedArticleMapper
+import de.iskae.domain.model.ArticleIdentifier
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -36,28 +36,30 @@ class ArticleCacheImplTest {
 
   @Test
   fun clearArticlesCompletes() {
-    val countryTestObserver = articleCacheImpl.clearTopHeadlines(Country.DE, null).test()
+    val articleIdentifier = makeArticleIdentifier()
+    val countryTestObserver = articleCacheImpl.clearTopHeadlines(articleIdentifier).test()
     countryTestObserver.assertComplete()
-    val categoryTestObserver = articleCacheImpl.clearTopHeadlines(null, Category.BUSINESS).test()
+    val categoryTestObserver = articleCacheImpl.clearTopHeadlines(articleIdentifier).test()
     categoryTestObserver.assertComplete()
-    val countryAndCategoryTestObserver = articleCacheImpl.clearTopHeadlines(Country.DE, Category.BUSINESS).test()
+    val countryAndCategoryTestObserver = articleCacheImpl.clearTopHeadlines(articleIdentifier).test()
     countryAndCategoryTestObserver.assertComplete()
   }
 
   @Test
   fun saveArticlesSuccessful() {
-    val articles = makeArticleEntityList(10)
+    val articleIdentifier = makeArticleIdentifier()
+    val articles = makeArticleEntityList(10, articleIdentifier)
 
     val testObserver = articleCacheImpl.saveTopHeadlines(articles).test()
     testObserver.assertComplete()
 
     //The mock data always has DE and BUSINESS
-    val getCachedArticlesObserver = articleCacheImpl.getTopHeadlines(Country.DE, Category.BUSINESS).test()
+    val getCachedArticlesObserver = articleCacheImpl.getTopHeadlines(articleIdentifier).test()
     getCachedArticlesObserver.assertNoErrors()
     getCachedArticlesObserver.assertValueCount(1)
     getCachedArticlesObserver.assertValue(articles)
 
-    val getNonExistentCachedObservable = articleCacheImpl.getTopHeadlines(null, null).test()
+    val getNonExistentCachedObservable = articleCacheImpl.getTopHeadlines(ArticleIdentifier(null, null, 0)).test()
     getNonExistentCachedObservable.assertNoErrors()
     getNonExistentCachedObservable.assertValueCount(1)
     getNonExistentCachedObservable.assertValue(listOf())
@@ -65,13 +67,14 @@ class ArticleCacheImplTest {
 
   @Test
   fun isTopHeadlinesCachedReturnsData() {
-    val nonExistentCacheObserver = articleCacheImpl.isTopHeadlinesCached(Country.DE, Category.BUSINESS).test()
+    val articleIdentifier = makeArticleIdentifier()
+    val nonExistentCacheObserver = articleCacheImpl.isTopHeadlinesCached(articleIdentifier).test()
     nonExistentCacheObserver.assertValue(false)
 
-    val articles = makeArticleEntityList(10)
+    val articles = makeArticleEntityList(10, articleIdentifier)
     articleCacheImpl.saveTopHeadlines(articles).test()
 
-    val testObserver = articleCacheImpl.isTopHeadlinesCached(Country.DE, Category.BUSINESS).test()
+    val testObserver = articleCacheImpl.isTopHeadlinesCached(articleIdentifier).test()
     testObserver.assertValue(true)
   }
 

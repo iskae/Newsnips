@@ -1,0 +1,92 @@
+apply plugin: "${BuildPlugins.androidApplication}"
+apply plugin: "${BuildPlugins.kotlinKapt}"
+apply plugin: "${BuildPlugins.kotlinAndroid}"
+apply plugin: "${BuildPlugins.kotlinAndroidExtensions}"
+
+android {
+  compileSdkVersion AndroidSdk.compile
+  buildToolsVersion AndroidSdk.buildTools
+  defaultConfig {
+    minSdkVersion AndroidSdk.min
+    targetSdkVersion AndroidSdk.target
+    applicationId "de.iskae.newsnips"
+    versionCode 1
+    versionName "1.0"
+    vectorDrawables.useSupportLibrary = true
+    multiDexEnabled true
+  }
+
+  dataBinding {
+    enabled = true
+  }
+
+  buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+      buildConfigField "String", "NEWS_API_KEY", "\"a75c9f862aad475ca5bdef7676f3a4f5\""
+    }
+    release {
+      buildConfigField "String", "NEWS_API_KEY", "\"a75c9f862aad475ca5bdef7676f3a4f5\""
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation project(ProjectModules.data)
+  implementation project(ProjectModules.core)
+  implementation project(ProjectModules.domain)
+
+  implementation KotlinDependencies.stdLib
+  implementation CommonDependencies.threeTenAbp
+  implementation CommonDependencies.javaxInject
+  implementation CommonDependencies.javaxAnnotation
+  implementation RxJavaDependencies.rxKotlin
+  implementation RxJavaDependencies.rxAndroid
+
+  implementation AndroidDependencies.appCompat
+  implementation AndroidDependencies.materialDesign
+  implementation AndroidDependencies.constraintLayout
+
+  implementation DaggerDependencies.daggerAndroid
+  implementation DaggerDependencies.daggerSupport
+  kapt DaggerDependencies.daggerProcessor
+  kapt DaggerDependencies.daggerCompiler
+
+  implementation AndroidDependencies.lifecycleCommon
+  implementation AndroidDependencies.lifecycleRuntime
+  implementation AndroidDependencies.lifecycleExtensions
+  kapt AndroidDependencies.lifecycleCompiler
+
+  implementation CommonDependencies.timber
+  implementation CommonDependencies.glide
+
+  implementation AndroidDependencies.paging
+  implementation AndroidDependencies.pagingRxJava
+
+  testImplementation TestingDependencies.assertJ
+  testImplementation TestingDependencies.junit
+  testImplementation TestingDependencies.mockitoKt
+  testImplementation TestingDependencies.mockitoInline
+  testImplementation TestingDependencies.robolectric
+  testImplementation TestingDependencies.archTesting
+  testImplementation TestingDependencies.roomTesting
+
+  androidTestImplementation TestingDependencies.mockitoKt
+  androidTestImplementation TestingDependencies.junit
+  androidTestImplementation TestingDependencies.mockitoAndroid
+  androidTestImplementation TestingDependencies.androidJUnit
+  androidTestImplementation TestingDependencies.runner
+  androidTestImplementation TestingDependencies.rules
+  androidTestImplementation TestingDependencies.espressoContrib
+  androidTestImplementation TestingDependencies.espressoIntents
+  androidTestImplementation TestingDependencies.espressoCore
+
+  kaptTest DaggerDependencies.daggerCompiler
+}

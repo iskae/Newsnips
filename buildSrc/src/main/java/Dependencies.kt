@@ -19,15 +19,20 @@ object Versions {
   const val timber = "4.7.1"
   const val javaxInject = "1"
   const val javaxAnnotation = "1.0"
+  const val threeTenAbp = "1.2.1"
+  const val facebookShimmer = "0.4.0"
+  const val glide = "4.9.0"
 
   //Android
   const val jetpack = "1.1.0"
+  const val appCompat = "1.1.0-beta01"
   const val recyclerView = "1.0.0"
   const val androidAnnotations = "1.0.0"
   const val materialDesign = "1.1.0-alpha06"
   const val constraintLayout = "2.0.0-beta1"
   const val ktx = "1.0.1"
-  const val room = "2.1.0-alpha07"
+  const val room = "2.1.0-rc01"
+  const val paging = "2.1.0"
   const val navigation = "2.1.0-alpha04"
   const val lifecycle = "2.2.0-alpha01"
 
@@ -44,6 +49,7 @@ object Versions {
   const val moshi = "1.4.0"
   const val okhttp = "3.9.1"
   const val retrofit = "2.3.0"
+  const val gson = "2.8.5"
 
   //Testing
   const val junit = "4.13-beta-3"
@@ -59,6 +65,7 @@ object ProjectModules {
   const val core = ":core"
   const val domain = ":domain"
   const val data = ":data"
+  const val presentation = ":presentation"
 }
 
 object BuildPlugins {
@@ -85,10 +92,13 @@ object CommonDependencies {
   const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
   const val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
   const val javaxAnnotation = "javax.annotation:jsr250-api:${Versions.javaxAnnotation}"
+  const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:${Versions.threeTenAbp}"
+  const val facebookShimmer = "com.facebook.shimmer:shimmer:${Versions.facebookShimmer}"
+  const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 }
 
 object AndroidDependencies {
-  const val appCompat = "androidx.appcompat:appcompat:${Versions.jetpack}"
+  const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
   const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
   const val androidAnnotations = "androidx.annotation:annotation:${Versions.androidAnnotations}"
   const val materialDesign = "com.google.android.material:material:${Versions.materialDesign}"
@@ -106,6 +116,8 @@ object AndroidDependencies {
   const val roomRuntime = "android.arch.persistence.room:runtime:${Versions.room}"
   const val roomCompiler = "android.arch.persistence.room:compiler:${Versions.room}"
   const val roomRxJava = "android.arch.persistence.room:rxjava2:${Versions.room}"
+  const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
+  const val pagingRxJava = "androidx.paging:paging-rxjava2:${Versions.paging}"
 }
 
 object KotlinDependencies {
@@ -134,6 +146,7 @@ object NetworkDependencies {
   const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
   const val retrofitMoshiConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
   const val retrofitRxjavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
+  const val gson = "com.google.code.gson:gson:${Versions.gson}"
 }
 
 object TestingDependencies {

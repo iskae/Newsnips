@@ -7,71 +7,70 @@ import de.iskae.data.model.ArticleEntity
 import de.iskae.data.repository.cache.model.CachedArticle
 import de.iskae.data.repository.cache.model.Config
 import de.iskae.data.repository.remote.model.ArticleResponseModel
-import de.iskae.data.repository.remote.model.SourceResponseModel
+import de.iskae.data.repository.remote.model.Source
 import de.iskae.data.repository.remote.model.TopHeadlinesResponseModel
 import de.iskae.domain.model.Article
+import de.iskae.domain.model.ArticleIdentifier
 
 object ArticleFactory {
-  fun makeArticleEntity(): ArticleEntity {
+  fun makeArticleEntity(articleIdentifier: ArticleIdentifier): ArticleEntity {
     return ArticleEntity(
-        Country.DE.name,
-        Category.BUSINESS.name,
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString()
+        articleIdentifier = articleIdentifier,
+        source = randomString(),
+        author = randomString(),
+        title = randomString(),
+        description = randomString(),
+        directUrl = randomString(),
+        imageUrl = randomString(),
+        publishedTime = randomString(),
+        content = randomString()
     )
   }
 
-  fun makeArticleEntityList(count: Int): List<ArticleEntity> {
+  fun makeArticleEntityList(count: Int, articleIdentifier: ArticleIdentifier): List<ArticleEntity> {
     val articles = mutableListOf<ArticleEntity>()
     repeat(count) {
-      articles.add(makeArticleEntity())
+      articles.add(makeArticleEntity(articleIdentifier))
     }
     return articles
   }
 
-  fun makeCachedArticle(): CachedArticle {
+  fun makeCachedArticle(articleIdentifier: ArticleIdentifier): CachedArticle {
     return CachedArticle(
-        Country.DE.name,
-        Category.BUSINESS.name,
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString()
+        articleIdentifier = articleIdentifier,
+        source = randomString(),
+        author = randomString(),
+        title = randomString(),
+        description = randomString(),
+        directUrl = randomString(),
+        imageUrl = randomString(),
+        publishedTime = randomString(),
+        content = randomString()
     )
   }
 
-  fun makeCachedArticleList(count: Int): List<CachedArticle> {
+  fun makeCachedArticleList(count: Int, articleIdentifier: ArticleIdentifier): List<CachedArticle> {
     val articles = mutableListOf<CachedArticle>()
     repeat(count) {
-      articles.add(makeCachedArticle())
+      articles.add(makeCachedArticle(articleIdentifier))
     }
     return articles
   }
 
-  fun makeSourceResponseModel(): SourceResponseModel {
-    return SourceResponseModel(randomString(), randomString())
+  private fun makeSourceResponseModel(): Source {
+    return Source(randomString(), randomString())
   }
 
   fun makeArticleResponseModel(): ArticleResponseModel {
     return ArticleResponseModel(
-        makeSourceResponseModel(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString()
+        source = makeSourceResponseModel(),
+        author = randomString(),
+        title = randomString(),
+        description = randomString(),
+        url = randomString(),
+        urlToImage = randomString(),
+        publishedAt = randomString(),
+        content = randomString()
     )
   }
 
@@ -83,22 +82,25 @@ object ArticleFactory {
     return TopHeadlinesResponseModel(randomString(), articles.size, articles)
   }
 
-  fun makeConfig(): Config {
-    return Config(lastCacheTime = System.currentTimeMillis(), countryCode = Country.DE.name, category = Category.BUSINESS.name)
+  fun makeConfig(articleIdentifier: ArticleIdentifier): Config {
+    return Config(lastCacheTime = System.currentTimeMillis(), articleIdentifier = articleIdentifier)
   }
 
-  fun makeArticle(): Article {
+  fun makeArticle(articleIdentifier: ArticleIdentifier): Article {
     return Article(
-        Country.DE.name,
-        Category.BUSINESS.name,
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString(),
-        randomString()
+        articleIdentifier = articleIdentifier,
+        source = randomString(),
+        author = randomString(),
+        title = randomString(),
+        description = randomString(),
+        directUrl = randomString(),
+        imageUrl = randomString(),
+        publishedTime = randomString(),
+        content = randomString()
     )
+  }
+
+  fun makeArticleIdentifier(): ArticleIdentifier {
+    return ArticleIdentifier(Country.DE.name, Category.BUSINESS.name, 0)
   }
 }
